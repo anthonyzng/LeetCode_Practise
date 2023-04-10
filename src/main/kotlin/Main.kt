@@ -1,6 +1,7 @@
 import kotlin.math.abs
 import kotlin.reflect.typeOf
 import kotlin.system.exitProcess
+import java.util.*;
 fun main(args: Array<String>) {
     val num = intArrayOf(7,1,5,3,6,4)
     //print(longestCommonPrefix(arrayOf("flower","flower","flower","flower")))
@@ -150,4 +151,26 @@ fun maxProfit(prices: IntArray): Int {
         }
     }
     return profit
+}
+
+// 20 Valid Parentheses
+fun isValid(s: String): Boolean {
+    if(s.length % 2 != 0){
+        return false
+    }
+    val stack = Stack<Char>();
+    for (i in s.toCharArray()){
+        if(i == '(' || i == '{' || i == '['){
+            stack.push(i);
+        }else if(i == ')' && !stack.isEmpty() && stack.peek() == '('){
+            stack.pop();
+        }else if(i == '}' && !stack.isEmpty() && stack.peek() == '{'){
+            stack.pop();
+        }else if(i == ']' && !stack.isEmpty() && stack.peek() == '['){
+            stack.pop();
+        }else{
+            return false
+        }
+    }
+    return stack.isEmpty();
 }
