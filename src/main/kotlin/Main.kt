@@ -2,6 +2,19 @@ import kotlin.math.abs
 import kotlin.reflect.typeOf
 import kotlin.system.exitProcess
 import java.util.*;
+
+// for data structure
+class ListNode(var `val`: Int) {
+    var next: ListNode? = null
+}
+
+//for test case value
+fun test_link_node(){
+    // create a linkNode as  (1) -> (2) -> (4)
+    var list1 : ListNode ?= ListNode(1);
+    list1?.next = ListNode(2);
+    list1?.next?.next = ListNode(4);
+}
 fun main(args: Array<String>) {
     val num = intArrayOf(7,1,5,3,6,4)
     //print(longestCommonPrefix(arrayOf("flower","flower","flower","flower")))
@@ -173,4 +186,30 @@ fun isValid(s: String): Boolean {
         }
     }
     return stack.isEmpty();
+}
+
+// 21. Merge Two Sorted Lists
+fun mergeTwoLists(list1: ListNode?, list2: ListNode?): ListNode? {
+    var temp_node = ListNode(0)
+    var current_node = temp_node
+    var temp_l1 = list1
+    var temp_l2 = list2
+
+    while(temp_l1 != null && temp_l2 != null) {
+        if(temp_l1.`val` < temp_l2.`val`) {
+            current_node.next = temp_l1
+            temp_l1 = temp_l1.next
+        } else {
+            current_node.next = temp_l2
+            temp_l2 = temp_l2.next
+        }
+        current_node = current_node.next!!
+    }
+    if(temp_l1 != null) {
+        current_node.next = temp_l1
+    }
+    if(temp_l2 != null) {
+        current_node.next = temp_l2
+    }
+    return temp_node.next
 }
