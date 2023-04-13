@@ -213,3 +213,24 @@ fun mergeTwoLists(list1: ListNode?, list2: ListNode?): ListNode? {
     }
     return temp_node.next
 }
+// 203. Remove Linked List Elements
+fun removeElements(head: ListNode?, `val`: Int): ListNode? {
+    val dummy_node = ListNode(0);
+    var current_node = dummy_node;
+    var temp_head : ListNode ?= head;
+    while(temp_head != null){
+        if(temp_head?.`val` == `val`){
+            while(temp_head?.`val` == `val`){
+                temp_head = temp_head.next
+            }
+        }
+        current_node.next = temp_head
+        if(current_node?.next != null){
+            current_node = current_node.next!!;
+        }
+        //println("current_node val : " + current_node.`val`);
+        //println("next val : "+ current_node.next.`val`);
+        temp_head = temp_head?.next;
+    }
+    return dummy_node.next
+}
