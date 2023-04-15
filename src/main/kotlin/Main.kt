@@ -234,3 +234,23 @@ fun removeElements(head: ListNode?, `val`: Int): ListNode? {
     }
     return dummy_node.next
 }
+
+//206. Reverse Linked List
+fun reverseList(head: ListNode?): ListNode? {
+    var prev_node : ListNode? = null;
+    var current_node = head;
+    while(current_node != null){
+//        println("==============loop start=================")
+//        println("start current_node = "+current_node?.`val`?:"null")
+        var next  = current_node.next;
+//        println("next = " + next?.`val`?:"null");
+        current_node.next = prev_node;
+//        println("current node.next = " + prev_node?.`val`?:"null");
+        prev_node = current_node;
+//        println("prev_node = " + current_node?.`val`?:"null");
+        current_node = next;
+//        println("update current_node = "+current_node?.`val`?:"null")
+//        println("==============loop end=================")
+    }
+    return prev_node;
+}
