@@ -16,9 +16,8 @@ fun test_link_node(){
     list1?.next?.next = ListNode(4);
 }
 fun main(args: Array<String>) {
-    val num = intArrayOf(7,1,5,3,6,4)
-    //print(longestCommonPrefix(arrayOf("flower","flower","flower","flower")))
-    println(maxProfit(num))
+    val num = intArrayOf(0,0,1,1,1,2,2,3,3,4)
+    //println(maxProfit(num))
 }
 
 //218 Contains Duplicate I
@@ -253,4 +252,179 @@ fun reverseList(head: ListNode?): ListNode? {
 //        println("==============loop end=================")
     }
     return prev_node;
+}
+
+//2215. Find the Difference of Two Arrays
+fun findDifference(nums1: IntArray, nums2: IntArray): List<List<Int>> {
+    val resultList: MutableList<List<Int>> = mutableListOf()
+    val n1Set = nums1.toSet()
+    val n2Set = nums2.toSet()
+
+    val copyOfN1Set = n1Set.toMutableSet()
+    for(num in n1Set){
+        if(n2Set.contains(num)){
+            copyOfN1Set.remove(num)
+        }
+    }
+    val copyOfN2Set = n2Set.toMutableSet()
+    for(num in n2Set){
+        if(n1Set.contains(num)){
+            copyOfN2Set.remove(num)
+        }
+    }
+    resultList.add(copyOfN1Set.toList())
+    resultList.add(copyOfN2Set.toList())
+    return resultList
+}
+
+//35. Search Insert Position
+fun searchInsert(nums: IntArray, target: Int): Int {
+    for(i in nums.indices){
+        if(nums[i] == target ||nums[i] > target){
+            return i
+        }
+        if(nums[i] > target && nums[i-1] < target){
+            print("index = $i, value = ${nums[i]}, previous value = ${nums[i-1]}")
+            return i;
+        }
+    }
+    return nums.size;
+}
+
+//26. Remove Duplicates from Sorted Array
+fun removeDuplicates(nums: IntArray): Int {
+    //{0,1,1,1,1,2,2,3,3,4} pointer = 1,index = 2
+    //{0,1,2,1,1,2,2,3,3,4} pointer = 2  index = 5
+    //{0,1,2,3,1,2,2,3,3,4} pointer = 3 index = 7
+    //{0,1,2,3,4,2,2,3,3,4} pointer = 4 index = 9
+    var pointer = 0;
+    for(i in nums.indices){
+        if(nums[i] != nums[pointer]){
+            pointer++;
+            nums[pointer] = nums[i];
+        }
+    }
+    return pointer+1;
+}
+
+//27. Remove Element
+fun removeElement(nums: IntArray, `val`: Int): Int {
+    var l_pointer = 0;
+    for(i in nums.indices){
+        if(nums[i] != `val`){
+            nums[l_pointer] = nums[i];
+            l_pointer++;
+        }
+    }
+    return l_pointer
+}
+
+//28. Find the Index of the First Occurrence in a String
+fun strStr(haystack: String, needle: String): Int {
+    for(i in haystack.indices){
+        var h_pointer = i ;
+        var n_pointer = 0;
+        var tmp_result = "";
+        while(n_pointer < needle.length && h_pointer<haystack.length){
+            println(" Haystack "+haystack.get(h_pointer).toString() + " Needle "+needle.get(n_pointer).toString());
+            if(haystack.get(h_pointer) == needle.get(n_pointer)){
+                tmp_result += haystack.get(h_pointer)
+            }
+            h_pointer++;
+            n_pointer++;
+        }
+        if(tmp_result==needle){
+            return i;
+        }
+
+    }
+    return -1;
+}
+
+//58. Length of Last Word
+fun lengthOfLastWord(s: String): Int {
+    var space = " ";
+    var result = "";
+    var pointer = 0;
+    var start = 0;
+    for(i in s.length-1 downTo 0 ){
+        if(s.get(i).toString()!=space){
+            pointer = i+1;
+            for(q in i downTo 0){
+                if(s.get(q).toString()==space){
+                    start = q+1;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    for(p in start until pointer){
+        result+= s.get(p).toString();
+    }
+    return result.length;
+}
+
+//66. Plus One
+fun plusOne(digits: IntArray): IntArray {
+    for(i in digits.size -1 downTo 0){
+        if(digits[i]<9){
+            digits[i] = digits[i] + 1;
+            return digits;
+        }
+        digits[i] = 0;
+    }
+    var result_arr = IntArray(digits.size+1);
+    result_arr[0] = 1;
+    return result_arr;
+}
+
+//67. Add Binary
+fun addBinary(a: String, b: String): String {
+    var carry = 0
+    var i = a.length - 1
+    var j = b.length - 1
+    val sb = StringBuilder()
+    while (i >= 0 || j >= 0 || carry > 0) {
+        val sum = (if (i >= 0) a[i] - '0' else 0) + (if (j >= 0) b[j] - '0' else 0) + carry
+        if(i>=0){
+            println("a sting : " + a[i]);
+        }
+        if(j>=0){
+            println("b sting : " + b[j]);
+        }
+        println("Sum : " +sum);
+        sb.append(sum % 2) // left 0 / 1 becuase mod 2
+        println("Sum  % 2: " +sum % 2);
+        carry = sum / 2
+        println("Carry = Sum /2 =  : " +carry);
+        i--
+        j--
+        println(sb);
+        println("==================");
+    }
+    sb.reverse().toString();
+    println(sb);
+    return sb.toString()
+}
+//88. Merge Sorted Array
+fun merge(nums1: IntArray, m: Int, nums2: IntArray, n: Int): Unit {
+    var last_pointer = m + n -1;
+    var n1_pointer = m-1;
+    var n2_pointer = n-1;
+    while(n1_pointer >= 0 && n2_pointer >= 0){
+        if(nums1[n1_pointer] > nums2[n2_pointer]){
+            nums1[last_pointer] = nums1[n1_pointer];
+            n1_pointer--;
+        }else{
+            nums1[last_pointer] = nums2[n2_pointer];
+            n2_pointer--;
+        }
+        last_pointer--;
+    }
+    while(n2_pointer >= 0){
+        nums1[last_pointer] = nums2[n2_pointer];
+        last_pointer--;
+        n2_pointer--;
+    }
 }
